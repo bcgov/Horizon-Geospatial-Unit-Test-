@@ -1,6 +1,6 @@
 # Horizon-Geospatial-Unit-Test
 
-This repository contains unit tests (and will grow to include larger integration) for the Horizon geospatial client and server components. The testing approach starts with small, focused Python function tests and gradually increases scope to cover modules, endpoints, and full end-to-end behaviours of the new server. Basis of the code should be geospatial analysis and related everyday functions. 
+This repository contains unit tests(classes and functions) for the Horizon geospatial client and server components. The testing approach starts with small, focused Python function tests and gradually increases scope to cover modules, endpoints, and full end-to-end behaviours of the new server. Basis of the code should be geospatial analysis and related everyday functions. 
 
 ## What is a unit test?
 

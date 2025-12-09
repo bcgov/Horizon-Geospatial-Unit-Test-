@@ -32,6 +32,7 @@ W_DRIVE = os.getenv('W_DRIVE_TEST_LOC')
 O_PATH = os.getenv('O_PATH')
 MOVE_GDB= os.getenv('MOVE_GDB')
 MOVE_LAS_FILE= os.getenv('MOVE_LAS_FILE')
+MOVE_DEM = os.getenv('MOVE_DEM')
 logger.info("load env file")
 
 _run_id = f"manual-{getpass.getuser()}-{datetime.datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}"
@@ -48,6 +49,7 @@ class basic_tests:
         self.w_drive = W_DRIVE
         self.o_path = O_PATH
         self.las= MOVE_LAS_FILE
+        self.dem=MOVE_DEM
         self.test_gdb = MOVE_GDB
         self.w_test_path = os.path.join(self.w_drive, "unit_test_folder")
         self.user=os.getlogin()
@@ -102,6 +104,25 @@ class basic_tests:
         las_out=os.path.join(self.w_test_path,'source_data','bc_102i080_3_4_4_xyes_8_utm9_20240316_20240316.laz')
         shutil.copyfile(self.las,las_out)
     
+    @timeit(jsonl_path=TIMING_JSONL)
+    def delete_all(self):
+        shutil.rmtree(self.w_test_path)
+    
+    @timeit(jsonl_path=TIMING_JSONL)
+    def move_dem(self):
+        dem_out=os.path.join(self.w_test_path,'source_data','bc_102i080_3_4_4_xli1m_utm9_20240316_20240316.tif')
+        shutil.copyfile(self.dem,dem_out)
+
+    @timeit(jsonl_path=TIMING_JSONL)
+    def list_files(self, root_dir):
+        for root, dirs, files in os.walk(root_dir):
+            logger.info(f" Current directory: {root}")
+            
+        for d in dirs:
+            logger.info(f"  - Subdirectory: {d}")
+        
+        for f in files:
+            logger.info(f"  - File: {f}")
 
     
 if __name__ == "__main__":
@@ -110,4 +131,6 @@ if __name__ == "__main__":
     bt.create_txt()
     bt.move_gdb()
     bt.move_las()
+    bt.list_files(os.path.join(W_DRIVE,"unit_test_folder"))
+    bt.delete_all()
     logger.info("Timings written to %s", TIMING_JSONL)

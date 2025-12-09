@@ -53,6 +53,7 @@ class basic_tests:
         self.test_gdb = MOVE_GDB
         self.w_test_path = os.path.join(self.w_drive, "unit_test_folder")
         self.user=os.getlogin()
+        self.gdb_out=os.path.join(self.w_test_path,'source_data','unit_testing.gdb.zip')
 
     @timeit(jsonl_path=TIMING_JSONL)
 
@@ -96,8 +97,7 @@ class basic_tests:
 
     @timeit(jsonl_path=TIMING_JSONL)
     def move_gdb(self):
-        gdb_out=os.path.join(self.w_test_path,'source_data','unit_testing.gdb')
-        shutil.copytree(self.test_gdb,gdb_out)
+        shutil.copytree(self.test_gdb,self.gdb_out)
 
     @timeit(jsonl_path=TIMING_JSONL)
     def move_las(self):
@@ -105,13 +105,15 @@ class basic_tests:
         shutil.copyfile(self.las,las_out)
     
     @timeit(jsonl_path=TIMING_JSONL)
-    def delete_all(self):
-        shutil.rmtree(self.w_test_path)
-    
-    @timeit(jsonl_path=TIMING_JSONL)
     def move_dem(self):
         dem_out=os.path.join(self.w_test_path,'source_data','bc_102i080_3_4_4_xli1m_utm9_20240316_20240316.tif')
         shutil.copyfile(self.dem,dem_out)
+
+    @timeit(jsonl_path=TIMING_JSONL)
+    def unzip_it(self):
+        zip_out=os.path.join(self.w_test_path,'source_data',)
+        shutil.unpack_archive(self.gdb_out, zip_out)
+
 
     @timeit(jsonl_path=TIMING_JSONL)
     def list_files(self, root_dir):
@@ -124,13 +126,18 @@ class basic_tests:
         for f in files:
             logger.info(f"  - File: {f}")
 
-    
+    @timeit(jsonl_path=TIMING_JSONL)
+    def delete_all(self):
+        shutil.rmtree(self.w_test_path)
+
 if __name__ == "__main__":
     bt = basic_tests()
     bt.create_structure()
     bt.create_txt()
     bt.move_gdb()
+    bt.unzip_it
     bt.move_las()
+    bt.move_dem()
     bt.list_files(os.path.join(W_DRIVE,"unit_test_folder"))
-    bt.delete_all()
+    # bt.delete_all()
     logger.info("Timings written to %s", TIMING_JSONL)

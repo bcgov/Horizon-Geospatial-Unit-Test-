@@ -2,6 +2,10 @@
 
 This repository contains unit tests(classes and functions) for the Horizon geospatial client and server components. The testing approach starts with small, focused Python function tests and gradually increases scope to cover modules, endpoints, and full end-to-end behaviours of the new server. Basis of the code should be geospatial analysis and related everyday functions. 
 
+# Run Test
+in the terminal from the root directory use '''python -m pytest tests/test_arcpy_basic.py -v''' to run a test, replace 'test_arcpy_basic.py' with the test you want to run 
+
+
 ## What is a unit test?
 
 A unit test is an automated check that verifies the behavior of a small, isolated piece of code (a "unit") — typically a single function or class method. Unit tests should be fast, deterministic, and independent of external systems (databases, network, file systems). They are the base of a reliable test suite because they:

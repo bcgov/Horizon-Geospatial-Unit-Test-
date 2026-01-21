@@ -8,7 +8,7 @@ import pytest
 import py_basic
 from dotenv import load_dotenv
 
-
+load_dotenv()
 
 def _env_paths():
     # explicitly check the same drives your script checks

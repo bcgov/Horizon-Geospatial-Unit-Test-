@@ -2,7 +2,6 @@
 import pathlib
 import os
 from dotenv import load_dotenv
-import pathlib
 import logging
 from sqlalchemy.engine import create_engine
 import oracledb
